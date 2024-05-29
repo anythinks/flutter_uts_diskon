@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
             context,
@@ -167,7 +167,9 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
         backgroundColor: Colors.purple,
-        child: const Icon(Icons.add, color: Colors.white),
+        foregroundColor: Colors.white,
+        label: const Text('Tambah'),
+        icon: const Icon(Icons.add),
       ),
     );
   }
