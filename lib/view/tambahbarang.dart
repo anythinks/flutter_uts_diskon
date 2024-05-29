@@ -15,12 +15,14 @@ class _TambahBarangState extends State<TambahBarang> {
   final _satuanController = TextEditingController();
   final _hargabeliController = TextEditingController();
   final _hargajualController = TextEditingController();
+  final _diskonController = TextEditingController();
 
   bool _validateKode = false;
   bool _validateNama = false;
   bool _validateSatuan = false;
   bool _validatehargabeli = false;
   bool _validatehargajual = false;
+  bool _validateDiskon = false;
 
   final _barangService = BarangService();
 
@@ -29,7 +31,7 @@ class _TambahBarangState extends State<TambahBarang> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
-        title: const Text('Add Barang'),
+        title: const Text('Tambah Barang'),
         centerTitle: true,
         foregroundColor: Colors.white,
       ),
@@ -39,15 +41,7 @@ class _TambahBarangState extends State<TambahBarang> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Add Barang',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.purple,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 8.0),
               TextField(
                 controller: _kodeController,
                 decoration: InputDecoration(
@@ -107,14 +101,22 @@ class _TambahBarangState extends State<TambahBarang> {
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 20.0),
+              TextField(
+                  controller: _diskonController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: 'Enter Diskon',
+                    labelText: 'Diskon',
+                    errorText:
+                        _validateDiskon ? 'Diskon Value Can\'t Be Empty' : null,
+                  )),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blueAccent,
-                      textStyle: const TextStyle(fontSize: 15),
-                    ),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                        backgroundColor: Colors.blueAccent),
+                    child: const Text('Save'),
                     onPressed: () async {
                       setState(() {
                         _validateKode = _kodeController.text.isEmpty;
@@ -122,34 +124,32 @@ class _TambahBarangState extends State<TambahBarang> {
                         _validateSatuan = _satuanController.text.isEmpty;
                         _validatehargabeli = _hargabeliController.text.isEmpty;
                         _validatehargajual = _hargajualController.text.isEmpty;
+                        _validateDiskon = _diskonController.text.isEmpty;
                       });
 
                       if (!_validateKode &&
                           !_validateNama &&
                           !_validateSatuan &&
                           !_validatehargabeli &&
-                          !_validatehargajual) {
+                          !_validatehargajual &&
+                          !_validateDiskon) {
                         var barang = Barang()
                           ..kode = _kodeController.text
                           ..nama = _namaController.text
                           ..satuan = _satuanController.text
                           ..hargabeli = int.parse(_hargabeliController.text)
-                          ..hargajual = int.parse(_hargajualController.text);
+                          ..hargajual = int.parse(_hargajualController.text)
+                          ..diskon = _diskonController.text;
 
                         var hasil = await _barangService.saveBarang(barang);
-                        // ignore: use_build_context_synchronously
                         Navigator.pop(context, hasil);
                       }
                     },
-                    child: const Text('Save'),
                   ),
                   const SizedBox(width: 10.0),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.red,
-                      textStyle: const TextStyle(fontSize: 15),
-                    ),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                        backgroundColor: Colors.redAccent),
                     onPressed: () {
                       setState(() {
                         _kodeController.clear();
@@ -157,11 +157,13 @@ class _TambahBarangState extends State<TambahBarang> {
                         _satuanController.clear();
                         _hargabeliController.clear();
                         _hargajualController.clear();
+                        _diskonController.clear();
                         _validateKode = false;
                         _validateNama = false;
                         _validateSatuan = false;
                         _validatehargabeli = false;
                         _validatehargajual = false;
+                        _validateDiskon = false;
                       });
                     },
                     child: const Text('Reset'),

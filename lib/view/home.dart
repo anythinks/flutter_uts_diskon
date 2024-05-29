@@ -3,7 +3,7 @@ import 'package:myapp/controller/barangservice.dart';
 import 'package:myapp/model/barang.dart';
 import 'package:myapp/view/tambahbarang.dart';
 import 'package:myapp/view/editbarang.dart';
-import 'package:myapp/view/viewbarang.dart';
+import 'package:myapp/view/detailbarang.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late List<Barang> _barangList = <Barang>[];
+  late var _barangList = <Barang>[];
   final BarangService _barangService = BarangService();
 
   @override
@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
         barangModel.satuan = barang['satuan'];
         barangModel.hargabeli = barang['hargabeli'];
         barangModel.hargajual = barang['hargajual'];
+        barangModel.diskon = barang['diskon'];
         _barangList.add(barangModel);
       });
     });
@@ -51,16 +52,18 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (param) {
         return AlertDialog(
-          title: const Text(
-            'Kamu Yakin Menghapus',
-            style: TextStyle(color: Colors.teal, fontSize: 20),
+          title: const Text('Hapus'),
+          content: const Text(
+            'Yakin Ingin Menghapus',
           ),
           actions: [
             TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.red,
-              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+            FilledButton(
               onPressed: () async {
                 var result = await _barangService.deleteBarang(kode);
                 if (result != null) {
@@ -71,16 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               },
               child: const Text('Delete'),
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.teal,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('Close'),
             ),
           ],
         );
@@ -93,8 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
-        title: const Text(
-          'Barang'),
+        title: const Text('Barang'),
         centerTitle: true,
         foregroundColor: Colors.white,
       ),
@@ -147,7 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     IconButton(
                       onPressed: () {
-                        _deleteFormDialog(context, _barangList[index].kode ?? "");
+                        _deleteFormDialog(
+                            context, _barangList[index].kode ?? "");
                       },
                       icon: const Icon(
                         Icons.delete,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../controller/barangservice.dart';
 import '../model/barang.dart';
 
@@ -17,11 +16,13 @@ class _EditBarangState extends State<EditBarang> {
   final _satuanController = TextEditingController();
   final _hargabeliController = TextEditingController();
   final _hargajualController = TextEditingController();
+  final _diskonController = TextEditingController();
 
   bool _validateNama = false;
   bool _validateSatuan = false;
-  bool _validatehargabeli = false;
-  bool _validatehargajual = false;
+  bool _validateHargaBeli = false;
+  bool _validateHargaJual = false;
+  bool _validateDiskon = false;
 
   final _barangService = BarangService();
 
@@ -32,6 +33,7 @@ class _EditBarangState extends State<EditBarang> {
     _satuanController.text = widget.barang.satuan ?? '';
     _hargabeliController.text = widget.barang.hargabeli?.toString() ?? '';
     _hargajualController.text = widget.barang.hargajual?.toString() ?? '';
+    _diskonController.text = widget.barang.diskon?.toString() ?? '';
   }
 
   @override
@@ -49,14 +51,6 @@ class _EditBarangState extends State<EditBarang> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Edit Barang',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.purple,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
               const SizedBox(height: 20.0),
               TextField(
                 controller: _namaController,
@@ -86,7 +80,7 @@ class _EditBarangState extends State<EditBarang> {
                   border: const OutlineInputBorder(),
                   hintText: 'Enter Harga Beli',
                   labelText: 'Harga Beli',
-                  errorText: _validatehargabeli
+                  errorText: _validateHargaBeli
                       ? 'Harga Beli Value Can\'t Be Empty'
                       : null,
                 ),
@@ -99,65 +93,76 @@ class _EditBarangState extends State<EditBarang> {
                   border: const OutlineInputBorder(),
                   hintText: 'Enter Harga Jual',
                   labelText: 'Harga Jual',
-                  errorText: _validatehargajual
+                  errorText: _validateHargaJual
                       ? 'Harga Jual Value Can\'t Be Empty'
                       : null,
                 ),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 20.0),
+              TextField(
+                controller: _diskonController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
+                  hintText: 'Enter Diskon',
+                  labelText: 'Diskon',
+                  errorText:
+                      _validateDiskon ? 'Diskon Value Can\'t Be Empty' : null,
+                ),
+              ),
+              const SizedBox(height: 20.0),
               Row(
                 children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.teal,
-                      textStyle: const TextStyle(fontSize: 15),
-                    ),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                        backgroundColor: Colors.blueAccent),
                     child: const Text('Update'),
                     onPressed: () async {
                       setState(() {
                         _validateNama = _namaController.text.isEmpty;
                         _validateSatuan = _satuanController.text.isEmpty;
-                        _validatehargabeli = _hargabeliController.text.isEmpty;
-                        _validatehargajual = _hargajualController.text.isEmpty;
+                        _validateHargaBeli = _hargabeliController.text.isEmpty;
+                        _validateHargaJual = _hargajualController.text.isEmpty;
+                        _validateDiskon = _diskonController.text.isEmpty;
                       });
 
                       if (!_validateNama &&
                           !_validateSatuan &&
-                          !_validatehargabeli &&
-                          !_validatehargajual) {
+                          !_validateHargaBeli &&
+                          !_validateHargaJual &&
+                          !_validateDiskon) {
                         var barang = Barang()
                           ..kode = widget.barang.kode
                           ..nama = _namaController.text
                           ..satuan = _satuanController.text
                           ..hargabeli = int.parse(_hargabeliController.text)
-                          ..hargajual = int.parse(_hargajualController.text);
+                          ..hargajual = int.parse(_hargajualController.text)
+                          ..diskon = _diskonController.text;
 
                         var hasil = await _barangService.updateBarang(barang);
-                        // ignore: use_build_context_synchronously
                         Navigator.pop(context, hasil);
                       }
                     },
                   ),
                   const SizedBox(width: 10.0),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.red,
-                      textStyle: const TextStyle(fontSize: 15),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                        backgroundColor: Colors.redAccent),
+                    child: const Text(
+                      'Reset',
                     ),
-                    child: const Text('Reset'),
                     onPressed: () {
                       setState(() {
                         _namaController.clear();
                         _satuanController.clear();
                         _hargabeliController.clear();
                         _hargajualController.clear();
+                        _diskonController.clear();
                         _validateNama = false;
                         _validateSatuan = false;
-                        _validatehargabeli = false;
-                        _validatehargajual = false;
+                        _validateHargaBeli = false;
+                        _validateHargaJual = false;
+                        _validateDiskon = false;
                       });
                     },
                   ),

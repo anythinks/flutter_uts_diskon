@@ -6,6 +6,7 @@ class BarangService {
   BarangService() {
     _repository = Repository();
   }
+  
   //Save barang
   saveBarang(Barang barang) async {
     return await _repository.insertData('barang', barang.barangMap());

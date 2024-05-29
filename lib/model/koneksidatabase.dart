@@ -1,5 +1,5 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Koneksidatabase {
@@ -12,8 +12,7 @@ class Koneksidatabase {
   }
 
   Future<void> _createDatabase(Database database, int version) async {
-    String sql =
-        "CREATE TABLE barang (kode TEXT ,nama TEXT,satuan TEXT, hargabeli INTEGER, hargajual INTEGER);";
-    await database.execute(sql);
+    await database.execute(
+        'CREATE TABLE barang (kode TEXT ,nama TEXT, satuan TEXT, hargabeli INTEGER, hargajual INTEGER, diskon TEXT)');
   }
 }

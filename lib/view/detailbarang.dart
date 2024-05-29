@@ -14,8 +14,9 @@ class _ViewBarangState extends State<ViewBarang> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.white,
         backgroundColor: Colors.purple,
-        title: const Text('View Barang'),
+        title: const Text('Detail Barang'),
         centerTitle: true,
       ),
       body: Container(
@@ -23,15 +24,6 @@ class _ViewBarangState extends State<ViewBarang> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Detail Barang",
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: Colors.blueGrey,
-                fontSize: 20,
-              ),
-            ),
-            const SizedBox(height: 20),
             Row(
               children: [
                 const Text(
@@ -132,6 +124,25 @@ class _ViewBarangState extends State<ViewBarang> {
               ],
             ),
             const SizedBox(height: 20),
+            Row(
+              children: [
+                const Text(
+                  'Diskon',
+                  style: TextStyle(
+                    color: Colors.purple,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Text(
+                    widget.barang.diskon.toString(),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

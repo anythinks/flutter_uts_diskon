@@ -1,4 +1,4 @@
-import 'package:myapp/view/koneksidatabase.dart';
+import 'package:myapp/model/koneksidatabase.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Repository {
