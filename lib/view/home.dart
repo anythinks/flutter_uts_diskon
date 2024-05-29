@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late var _barangList = <Barang>[];
+  final _barangList = <Barang>[];
   final BarangService _barangService = BarangService();
 
   @override
@@ -24,7 +24,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> getAllBarang() async {
     var barangs = await _barangService.readAllBarang();
-    _barangList = <Barang>[];
     barangs.forEach((barang) {
       setState(() {
         var barangModel = Barang();
@@ -54,14 +53,14 @@ class _MyHomePageState extends State<MyHomePage> {
         return AlertDialog(
           title: const Text('Hapus'),
           content: const Text(
-            'Yakin Ingin Menghapus',
+            'Yakin Ingin Menghapus?',
           ),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Close'),
+              child: const Text('Batal'),
             ),
             FilledButton(
               onPressed: () async {
@@ -73,7 +72,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   _showSuccessSnackBar('Hapus Data Barang Success');
                 }
               },
-              child: const Text('Delete'),
+              child: const Text('Hapus'),
             ),
           ],
         );
@@ -96,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
           itemCount: _barangList.length,
           itemBuilder: (context, index) {
             return Card(
+              elevation: 2,
               child: ListTile(
                 onTap: () {
                   Navigator.push(

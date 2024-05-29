@@ -142,6 +142,7 @@ class _TambahBarangState extends State<TambahBarang> {
                           ..diskon = _diskonController.text;
 
                         var hasil = await _barangService.saveBarang(barang);
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context, hasil);
                       }
                     },
