@@ -5,6 +5,9 @@ class Barang {
   int? hargabeli;
   int? hargajual;
   String? diskon;
+  String? golongan;
+  String? warna;
+  int? berat;
 
   barangMap() {
     var mapping = <String, dynamic>{};
@@ -14,6 +17,9 @@ class Barang {
     mapping['hargabeli'] = hargabeli;
     mapping['hargajual'] = hargajual;
     mapping['diskon'] = diskon;
+    mapping['golongan'] = golongan;
+    mapping['warna'] = warna;
+    mapping['berat'] = berat;
     return mapping;
   }
 }

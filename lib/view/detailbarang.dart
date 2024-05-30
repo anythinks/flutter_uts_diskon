@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/model/barang.dart';
+import 'package:myapp/util/util.dart';
 
 class ViewBarang extends StatefulWidget {
   final Barang barang;
@@ -24,125 +25,23 @@ class _ViewBarangState extends State<ViewBarang> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                const Text(
-                  'Kode',
-                  style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text(
-                    widget.barang.kode ?? "",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
+            showData('Kode', widget.barang.kode!),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text(
-                  'Nama',
-                  style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text(
-                    widget.barang.nama ?? "",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
+            showData('Nama', widget.barang.nama!),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text(
-                  'Satuan',
-                  style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text(
-                    widget.barang.satuan ?? "",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
+            showData('Satuan', widget.barang.satuan!),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text(
-                  'Harga Beli',
-                  style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text(
-                    widget.barang.hargabeli.toString(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
+            showData('Harga Beli', widget.barang.hargabeli.toString()),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text(
-                  'Harga Jual',
-                  style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text(
-                    widget.barang.hargajual.toString(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
+            showData('Harga Beli', widget.barang.hargajual.toString()),
             const SizedBox(height: 20),
-            Row(
-              children: [
-                const Text(
-                  'Diskon',
-                  style: TextStyle(
-                    color: Colors.purple,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child: Text(
-                    widget.barang.diskon.toString(),
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
+            showData('Diskon', widget.barang.diskon!),
+            const SizedBox(height: 20),
+            showData('Golongan', widget.barang.golongan!),
+            const SizedBox(height: 20),
+            showData('Warna', widget.barang.warna!),
+            const SizedBox(height: 20),
+            showData('Berat', widget.barang.berat.toString())
           ],
         ),
       ),

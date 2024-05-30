@@ -13,6 +13,6 @@ class Koneksidatabase {
 
   Future<void> _createDatabase(Database database, int version) async {
     await database.execute(
-        'CREATE TABLE barang (kode TEXT ,nama TEXT, satuan TEXT, hargabeli INTEGER, hargajual INTEGER, diskon TEXT)');
+        'CREATE TABLE barang (kode TEXT ,nama TEXT, satuan TEXT, hargabeli INTEGER, hargajual INTEGER, diskon TEXT, golongan TEXT, warna TEXT, berat INTEGER)');
   }
 }

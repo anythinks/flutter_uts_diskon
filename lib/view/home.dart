@@ -26,13 +26,16 @@ class _MyHomePageState extends State<MyHomePage> {
     var barangs = await _barangService.readAllBarang();
     barangs.forEach((barang) {
       setState(() {
-        var barangModel = Barang();
-        barangModel.kode = barang['kode'];
-        barangModel.nama = barang['nama'];
-        barangModel.satuan = barang['satuan'];
-        barangModel.hargabeli = barang['hargabeli'];
-        barangModel.hargajual = barang['hargajual'];
-        barangModel.diskon = barang['diskon'];
+        var barangModel = Barang()
+          ..kode = barang['kode']
+          ..nama = barang['nama']
+          ..satuan = barang['satuan']
+          ..hargabeli = barang['hargabeli']
+          ..hargajual = barang['hargajual']
+          ..diskon = barang['diskon']
+          ..golongan = barang['golongan']
+          ..warna = barang['warna']
+          ..berat = barang['berat'];
         _barangList.add(barangModel);
       });
     });

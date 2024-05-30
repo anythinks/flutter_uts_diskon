@@ -18,29 +18,31 @@ class Repository {
     }
   }
 
-  insertData(table, data) async {
+  insertData(String tableName, Map<String, dynamic> barang) async {
     var connection = await database;
-    return await connection?.insert(table, data);
+    return await connection?.insert(tableName, barang);
   }
 
-  readData(table) async {
+  readData(String tableName) async {
     var connection = await database;
-    return await connection?.query(table);
+    return await connection?.query(tableName);
   }
 
-  readDataById(table, itemId) async {
-    var connection = await database;
-    return await connection?.query(table, where: 'kode=?', whereArgs: [itemId]);
-  }
-
-  updateData(table, data) async {
+  readDataById(String tableName, itemId) async {
     var connection = await database;
     return await connection
-        ?.update(table, data, where: 'kode=?', whereArgs: [data['kode']]);
+        ?.query(tableName, where: 'kode=?', whereArgs: [itemId]);
   }
 
-  deleteDataBykode(table, kode) async {
+  updateData(String tableName, Map<String, dynamic> barang) async {
     var connection = await database;
-    return await connection?.rawDelete("delete from $table where kode='$kode'");
+    return await connection?.update(tableName, barang,
+        where: 'kode=?', whereArgs: [barang['kode']]);
+  }
+
+  deleteDataBykode(String tableName, kode) async {
+    var connection = await database;
+    return await connection
+        ?.rawDelete("delete from $tableName where kode='$kode'");
   }
 }
