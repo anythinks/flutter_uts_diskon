@@ -63,6 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Text('Batal'),
             ),
             FilledButton(
+              style: FilledButton.styleFrom(backgroundColor: Colors.purple),
               onPressed: () async {
                 var result = await _barangService.deleteBarang(kode);
                 if (result != null) {
